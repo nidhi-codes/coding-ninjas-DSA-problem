@@ -1,0 +1,52 @@
+int isSolution(vector<int>& arr, int n, int m, int mid){
+
+    int pageCount = 0;
+
+    for(int i=0;i<n;i++){
+
+        if(pageCount+arr[i] <= mid){
+            pageCount += arr[i];
+        }
+        else{
+            m--;
+            if(m == 0 || arr[i]>mid){
+                return 0;
+            }
+            pageCount = arr[i];
+        }
+    }
+    
+    return 1;
+}
+
+int findPages(vector<int>& arr, int n, int m) {
+    // Write your code here.
+
+    if(m>n){
+        return -1;
+    }
+    
+    int sum = 0;
+    for(int i=0;i<n;i++){
+        sum += arr[i];
+    }
+
+    int start = 0;
+    int end = sum;
+    int mid;
+    int ans = -1;
+
+    while(start<=end){
+
+        mid = start + (end-start)/2;
+
+        if(isSolution(arr, n, m, mid)){
+            ans = mid;
+            end = mid-1;
+        }
+        else{
+            start = mid+1;
+        }
+    }
+    return ans;
+}
