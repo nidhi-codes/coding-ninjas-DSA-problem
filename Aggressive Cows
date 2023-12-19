@@ -1,0 +1,45 @@
+int isSloution(vector<int> &stalls, int k, int distance, int len){
+
+    int a = stalls[0];
+    k--;
+    int diff;
+    for(int i=1;i<len;i++){
+        diff = stalls[i]-a;
+        if(diff>=distance){
+            k--;
+            a = stalls[i];
+            if(k==0){
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+
+int aggressiveCows(vector<int> &stalls, int k)
+{
+    //    Write your code here.
+
+    int len = stalls.size();
+
+    sort(stalls.begin(), stalls.end());
+    int start = 0;
+    int end = stalls[len-1];
+    int mid;
+
+    int ans = -1;
+
+    while(start<=end){
+        mid = start + (end-start)/2;
+
+        if(isSloution(stalls, k, mid, len)){
+            ans = mid;
+            start = mid+1;
+        }
+        else{
+            end = mid-1;
+        }
+    }
+    return ans;
+}
