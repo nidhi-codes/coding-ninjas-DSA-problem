@@ -1,0 +1,12 @@
+vector<int> rotateArray(vector<int>arr, int k) {
+    // Write your code here.
+
+    int len = arr.size();
+    vector<int> ans(len);
+
+    for(int i=0; i<len; i++){
+        ans[(len-k+i)%len] = arr[i];
+    }
+    
+    return ans;
+}
