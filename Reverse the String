@@ -1,0 +1,11 @@
+#include <bits/stdc++.h> 
+string reverseString(string str)
+{
+	// Write your code here.
+	int len = str.length();
+	for(int i=0, j=len-1; i<j; i++, j--){
+		swap(str[i], str[j]);
+	}
+
+	return str;
+}
