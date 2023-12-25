@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+
+void rotateMatrix(vector<vector<int>> &mat, int n, int m)
+{
+    // Write your code here
+
+        int rowStartingIndex = 0;
+        int rowEndingIndex = n-1;
+        int colStartingIndex = 0;
+        int colEndingIndex = m-1;
+
+        while(rowStartingIndex<rowEndingIndex && colStartingIndex<colEndingIndex){
+
+            int prev = mat[rowStartingIndex+1][colStartingIndex];
+            int curr;
+
+            for(int i = colStartingIndex; i<=colEndingIndex; i++){
+                curr = mat[rowStartingIndex][i];
+                mat[rowStartingIndex][i] = prev;
+                prev = curr;
+            }
+            rowStartingIndex++;
+
+            for(int i = rowStartingIndex; i<=rowEndingIndex; i++){
+                curr = mat[i][colEndingIndex];
+                mat[i][colEndingIndex] = prev;
+                prev = curr;
+            }
+            colEndingIndex--;
+
+            for(int i = colEndingIndex; rowStartingIndex<=rowEndingIndex && i>=colStartingIndex; i--){
+                curr = mat[rowEndingIndex][i];
+                mat[rowEndingIndex][i] = prev;
+                prev = curr;
+            }
+            rowEndingIndex--;
+
+            for(int i = rowEndingIndex; colStartingIndex<=colEndingIndex && i>=rowStartingIndex; i--){
+                curr = mat[i][colStartingIndex];
+                mat[i][colStartingIndex] = prev;
+                prev = curr;
+            }
+            colStartingIndex++;
+
+        }
+
+}
