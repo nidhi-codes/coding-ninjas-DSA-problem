@@ -1,0 +1,46 @@
+#include <bits/stdc++.h> 
+vector<int> findArraySum(vector<int>&a, int n, vector<int>&b, int m) {
+	// Write your code here.
+
+	vector<int>ans;
+
+	int carry = 0;
+
+	reverse(a.begin(), a.end());
+	reverse(b.begin(), b.end());
+
+	int i=0;
+	int j=0;
+
+	while(i<n || j<m){
+		
+		int sum;
+		if(i<n && j<m){
+			sum = a[i]+b[j]+carry;
+			ans.push_back(sum%10);
+			carry = sum/10;
+			i++;
+			j++;
+		}
+		else if(i<n){
+			sum = a[i]+carry;
+			ans.push_back(sum%10);
+			carry = sum/10;
+			i++;
+		}
+		else{
+			sum = b[j]+carry;
+			ans.push_back(sum%10);
+			carry = sum/10;
+			j++;
+		}
+
+	}
+
+	if(carry){
+		ans.push_back(carry);
+	}
+	reverse(ans.begin(), ans.end());
+	return ans;
+
+}
