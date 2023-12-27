@@ -1,0 +1,40 @@
+string reverseString(string &str){
+	// Write your code here.
+
+	
+	int len = str.length();
+	int count = 0;   // index to track the start of each word
+	string ans = "";
+	
+
+	for(int i=0; i<len; i++){
+		if(str[i] == ' ' && count != i){
+			// Reverse the word (substring from count to i-1)
+			reverse(str.begin()+count, str.begin()+i);
+			count = i+1;
+		}
+	}
+	
+
+	// Reverse the last word (if any)
+	reverse(str.begin() + count, str.end());
+
+
+	// Reverse the entire string to get the final result
+	reverse(str.begin(), str.end());
+
+
+	// Iterate through the reversed string to remove extra whitespaces
+	for(int i=0; i<len; i++){
+		if(str[i] != ' '){
+			ans += str[i];
+		}
+		else if(ans.length()>0 && ans[ans.length()-1] != ' '){
+			ans += ' ';
+		}
+	}
+
+
+	return ans;
+
+}
