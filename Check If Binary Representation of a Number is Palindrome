@@ -1,0 +1,39 @@
+#include <bits/stdc++.h> 
+
+void intToBinary(long long N, string &str){
+	
+	if(N > 1){
+		intToBinary(N/2, str);
+	}
+
+	str += N%2;
+}
+
+bool recursion(string &str, int i, int j){
+
+	if(i>j){
+		return true;
+	}
+
+	if(str[i] != str[j]){
+		return false;
+	}
+
+	i++;
+	j--;
+	return recursion(str, i, j);
+}
+
+bool checkPalindrome(long long N)
+{
+	// Write your code here.
+
+	string str = "";
+
+	intToBinary(N, str);
+
+	return recursion(str, 0, str.length()-1);
+
+
+	
+}
