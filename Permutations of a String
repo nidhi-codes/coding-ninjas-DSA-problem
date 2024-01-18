@@ -1,0 +1,33 @@
+#include<algorithm>
+
+void recursion(string str, vector<string>& ans, int index){
+
+        int len = str.length();
+        if(index >= len-1){
+            ans.push_back(str);
+            return;
+        }
+
+        for(int i=index; i<len; i++){
+            swap(str[index], str[i]);
+            recursion(str, ans, index+1);
+
+            //restoring original nums 
+            //backtracking
+            swap(str[index], str[i]);
+
+        }
+    }
+vector<string> generatePermutations(string &str)
+{
+    // write your code here
+        vector<string> ans;
+
+        int index = 0;
+
+        recursion(str, ans, index);
+
+        sort(ans.begin(), ans.end());
+        
+        return ans;
+}
