@@ -1,0 +1,39 @@
+#include <bits/stdc++.h> 
+
+void recursion(string str, vector<string>& ans, string temp, int index){
+
+        int len = str.length();
+
+        if(index >= len){
+
+			if(temp.length() > 0){
+				ans.push_back(temp);
+			}
+            
+            return;
+        }
+
+        //exclude nums[index]
+        recursion(str, ans, temp, index+1);
+
+        //indclude nums[index]
+        temp += str[index];
+        recursion(str, ans, temp, index+1);
+
+}
+
+vector<string> subsequences(string str){
+	
+	// Write your code here
+
+		vector<string> ans;
+
+        string temp;   //stores the output
+
+        int index = 0;
+
+        recursion(str, ans, temp, index);
+
+        return ans;
+	
+}
