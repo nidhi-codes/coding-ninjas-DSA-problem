@@ -1,0 +1,67 @@
+/*************************************************
+    
+    class Node {
+        public :
+
+        int data;
+        Node *next;
+
+        Node(int data) {
+            this -> data = data;
+            this -> next = NULL;
+        }
+    };
+
+*************************************************/
+Node* detectLoop(Node* head){
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while(fast && fast->next){
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if(slow == fast){
+            return slow;
+        }
+    }
+
+    return NULL;
+}
+
+Node* loopStartingNode(Node* head, Node* intersectionNode){
+
+    Node* slow = head;
+
+    while(slow != intersectionNode){
+        slow = slow->next;
+        intersectionNode = intersectionNode->next;
+    }
+
+    return slow;
+}
+
+
+
+Node *removeLoop(Node *head)
+{
+    // Write your code here.
+
+    Node* intersectionNode = detectLoop(head);
+    if(intersectionNode == NULL){
+        return head;
+    }
+
+    Node* startingNode = loopStartingNode(head, intersectionNode);
+
+    Node* temp = startingNode;
+    while(temp->next != startingNode){
+        temp = temp->next;
+    }
+    temp->next = NULL;
+
+    return head;
+
+
+}
