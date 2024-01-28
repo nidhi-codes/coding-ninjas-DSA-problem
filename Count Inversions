@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+
+    long long mergeAndInversion(long long arr[], int s, int e){
+
+        int mid = s+(e-s)/2;
+
+        int len1 = mid-s+1;
+        int len2 = e-mid;
+
+        int* arr1 = new int[len1];
+        int* arr2 = new int[len2];
+
+        for(int i=0; i<len1; i++){
+            arr1[i] = arr[s+i];
+        }
+
+        for(int i=0; i<len2; i++){
+            arr2[i] = arr[mid+1+i];
+        }
+
+        int i = 0;
+        int j = 0;
+        int index = s;
+        long long count = 0;
+
+        while(i<len1 && j<len2){
+
+            if(arr1[i] > arr2[j]){
+                arr[index] = arr2[j];
+                index++;
+                j++;
+                count += len1-i;
+            }
+            else{   
+                arr[index] = arr1[i];
+                index++;
+                i++;
+            }
+        }
+
+        while(i<len1){
+            arr[index] = arr1[i];
+            index++;
+            i++;
+        }
+
+        while(i<len2){
+            arr[index] = arr2[j];
+            index++;
+            j++;
+        }
+
+        delete []arr1;
+        delete []arr2;
+    
+        return count;
+
+    }
+
+    long long mergeSort(long long arr[], int s, int e){
+    
+        long long count = 0;
+
+        if(s<e){
+            int mid = s+(e-s)/2;
+
+            count += mergeSort(arr, s, mid);
+            count += mergeSort(arr, mid+1, e);
+            count += mergeAndInversion(arr, s, e);
+        }
+    
+        return count;
+    }
+    long long getInversions(long long *arr, int n){
+    // Write your code here.
+
+        return mergeSort(arr, 0, n-1);
+    }
