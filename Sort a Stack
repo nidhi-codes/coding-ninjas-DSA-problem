@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+
+void insertAtItsRightPosition(stack<int>& stack, int element){
+
+	if(stack.empty()){
+		stack.push(element);
+		return;
+	}
+
+	int num = stack.top();
+
+	if(num > element){
+		stack.pop();
+		insertAtItsRightPosition(stack, element);
+		stack.push(num);
+	}
+
+	else{
+		stack.push(element);
+	}
+
+}
+
+void sortStack(stack<int> &stack)
+{
+	// Write your code here
+
+	if(stack.empty()){
+		return;
+	}
+
+	int num = stack.top();
+	stack.pop();
+
+	sortStack(stack);
+
+	insertAtItsRightPosition(stack, num);
+
+}
