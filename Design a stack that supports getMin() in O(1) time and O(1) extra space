@@ -1,0 +1,74 @@
+class SpecialStack {
+
+    stack<int> st;
+    int mini;
+
+    public:
+        
+    void push(int data) {
+        // Implement the push() function.
+
+        if(st.empty()){
+            st.push(data);
+            mini = data;
+            return;
+        }
+
+        if(data > mini){
+            st.push(data);
+        }
+
+        else{
+            
+            int val = 2*data - mini;
+            mini = data;
+            st.push(val);
+        }
+
+    }
+
+    void pop() {
+        // Implement the pop() function.
+
+        if(st.empty()){
+            return;
+        }
+
+        int topp = st.top();
+        st.pop();
+
+        if(topp < mini){
+            mini = 2*mini - topp;
+        }
+
+    }
+
+    int top() {
+        // Implement the top() function.
+
+        if(st.empty()){
+            return -1;
+        }
+
+        int topp = st.top();
+
+        if(topp < mini){
+
+            return mini;
+
+        }
+
+        return topp;
+    }
+
+    int getMin() {
+        // Implement the getMin() function.
+
+        if(st.empty()){
+            return -1;
+        }
+        
+        return mini;
+        
+    }  
+};
