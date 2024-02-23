@@ -1,0 +1,39 @@
+#include <bits/stdc++.h> 
+queue<int> reverseElements(queue<int> q, int k)
+{
+    // Write your code here.
+
+    stack<int> st;
+        
+        int len = q.size();
+        
+        int i=0;
+        
+        while(i<k){
+            st.push(q.front());
+            q.pop();
+            i++;
+        }
+        
+        
+        while(!st.empty()){
+            q.push(st.top());
+            st.pop();
+        }
+        
+        if(k<len){
+            
+            int count = len-k;
+            
+            int i=0;
+            
+            while(i<count){
+                q.push(q.front());
+                q.pop();
+                i++;
+            }
+        }
+        
+        return q;
+       
+}
