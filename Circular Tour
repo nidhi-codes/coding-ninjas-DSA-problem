@@ -1,0 +1,25 @@
+#include <bits/stdc++.h> 
+int firstCircularTour(vector<int>& p, vector<int>& d, int n)
+{
+	// write your code here
+
+		int kami = 0;
+        int balance = 0;
+        int start = 0;
+        
+        for(int i=0; i<n; i++){
+            balance += p[i] - d[i];
+            
+            if(balance < 0){
+                kami += balance;
+                balance = 0;
+                start = i+1;
+            }
+        }
+        
+        if(kami+balance >= 0){
+            return start;
+        }
+        
+        return -1;
+}
