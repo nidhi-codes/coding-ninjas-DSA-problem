@@ -1,0 +1,88 @@
+#include <bits/stdc++.h> 
+// Implement class for minStack.
+class minStack
+{
+
+	int mini;
+    stack<int> st;
+	
+	public:
+		
+		// Constructor
+		minStack() 
+		{ 
+			
+		}
+		
+		// Function to add another element equal to num at the top of stack.
+		void push(int data)
+		{
+
+			if(st.empty()){
+                st.push(data);
+                mini = data;
+                return;
+            }
+    
+            if(data > mini){
+                st.push(data);
+            }
+
+            else {
+
+                int val = 2 * data - mini;
+                mini = data;
+                st.push(val);
+            }
+        }
+		
+		// Function to remove the top element of the stack.
+		int pop()
+		{
+
+			if(st.empty()){
+                return -1;
+            }
+    
+            int topp = st.top();
+            st.pop();
+    
+            if(topp < mini){
+                
+                int temp = mini;
+                mini = 2*mini - topp;
+                return temp;
+            }
+            
+            return topp;
+		}
+		
+		// Function to return the top element of stack if it is present. Otherwise return -1.
+		int top()
+		{
+			if(st.empty()){
+                return -1;
+            }
+
+			int topp = st.top();
+
+            if (topp <= mini)
+            {
+                return mini;
+            }
+
+            return topp;
+            
+		}
+		
+		// Function to return minimum element of stack if it is present. Otherwise return -1.
+		int getMin()
+		{
+			
+			if(st.empty()){
+                return -1;
+            }
+            
+            return mini;
+		}
+};
