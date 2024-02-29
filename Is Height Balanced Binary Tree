@@ -1,0 +1,56 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode
+    {
+    public:
+        T val;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T val)
+        {
+            this->val = val;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+
+pair<bool, int> balanced_height(TreeNode<int>* root){
+        
+        if(root == NULL){
+            return {true, 0};
+        }
+        
+        pair<bool, int> left = balanced_height(root->left);
+        pair<bool, int> right = balanced_height(root->right);
+        
+        bool left_balanced = left.first;
+        bool right_balanced = right.first;
+        bool left_right_height = abs(left.second-right.second) <= 1;
+        
+        pair<bool, int> ans;
+        if(left_balanced && right_balanced && left_right_height){
+            ans.first = true;
+        }
+        
+        else{
+            ans.first = false;
+        }
+        
+        ans.second = max(left.second, right.second) + 1;
+        
+        return ans;
+}
+
+bool isBalancedBT(TreeNode<int>* root){
+    // Write your code here.
+
+        pair<bool, int> ans = balanced_height(root);
+        
+        return ans.first;
+}
