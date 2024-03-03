@@ -1,0 +1,65 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T val;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T val) {
+            this->val = val;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+
+pair<bool, int> isSumTree_sum(TreeNode<int>* root){
+        
+        if(root == NULL){
+            return {true, 0};
+        }
+        
+        pair<bool, int> left = isSumTree_sum(root->left);
+        pair<bool, int> right = isSumTree_sum(root->right); 
+        
+        
+        bool left_isSum = left.first;
+        bool right_isSum = right.first;
+        bool left_right_sum;
+        
+        if(root->left == NULL && root->right == NULL){
+            left_right_sum = true;
+        }
+        else{
+            left_right_sum = (root->left == NULL ? 0 : left.second) + (root->right == NULL ? 0 : right.second) == root->val;
+        }
+        
+        pair<bool, int> ans;
+        
+        if(left_isSum && right_isSum && left_right_sum){
+            ans.first = true;
+        }
+        
+        else{
+            ans.first = false;
+        }
+        
+        ans.second = left.second+right.second+root->val;
+        
+        return ans;
+        
+}
+
+bool isSumTree(TreeNode<int> *root)
+{
+    // Write your code here.
+
+        return isSumTree_sum(root).first;
+
+}
