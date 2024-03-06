@@ -1,0 +1,66 @@
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    template <typename T>
+    class TreeNode
+    {
+    public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T dat)
+        {
+            this->data = dat;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+#include<map>
+vector<int> getTopView(TreeNode<int> *root)
+{
+        vector<int> ans;
+        
+        if(root == NULL){
+            return ans;
+        }
+        
+        //horizontal distance, node->data
+        map<int, int> value;
+        
+        //hd, node
+        queue<pair<int, TreeNode<int>*>> q;
+        
+        q.push(make_pair(0, root));
+        
+        while(!q.empty()){
+           
+           pair<int, TreeNode<int>*> temp = q.front();
+           q.pop();
+           
+           int hd = temp.first;
+           TreeNode<int>* frontNode = temp.second;
+           
+           if(value.find(hd) == value.end()){
+               value[hd] = frontNode->data;
+           }
+           
+           if(frontNode->left){
+               q.push(make_pair(hd-1, frontNode->left));
+           }
+           
+           if(frontNode->right){
+               q.push(make_pair(hd+1, frontNode->right));
+           }
+           
+        }
+        
+        for(auto i : value){
+            ans.push_back(i.second);
+        }
+        
+        return ans;
+}
