@@ -1,0 +1,111 @@
+/************************************************************
+
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode 
+    {
+        public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) 
+        {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+#include<map>
+    //creat mapping and find target node
+    void nodeToParentMapping(BinaryTreeNode<int>* root, int target, map<BinaryTreeNode<int>*, BinaryTreeNode<int>*>& mapping, BinaryTreeNode<int>*& targetNode){
+        
+        queue<BinaryTreeNode<int>*> q;
+        q.push(root);
+        mapping[root] = NULL;
+        
+        while(!q.empty()){
+            
+            BinaryTreeNode<int>* temp = q.front();
+            q.pop();
+            
+            if(temp->data == target){
+                targetNode = temp;
+            }
+            
+            if(temp->left){
+                mapping[temp->left] = temp;
+                q.push(temp->left);
+            }
+            
+            if(temp->right){
+                mapping[temp->right] = temp;
+                q.push(temp->right);
+            }
+        }
+        
+    }
+    
+    void burnTree(BinaryTreeNode<int>* targetNode, map<BinaryTreeNode<int>*, BinaryTreeNode<int>*> mapping, int& t){
+        
+        map<BinaryTreeNode<int>*, bool> visited;
+        queue<BinaryTreeNode<int>*> q;
+        
+        q.push(targetNode);
+        visited[targetNode] = true;
+        
+        
+        while(!q.empty()){
+            
+            bool flag = false;
+            int len = q.size();
+            for(int i=0; i<len; i++){
+                
+                BinaryTreeNode<int>* temp = q.front();
+                q.pop();
+                
+                if(temp->left && !visited[temp->left]){
+                    flag = true;
+                    q.push(temp->left);
+                    visited[temp->left] = true;
+                }
+                
+                if(temp->right && !visited[temp->right]){
+                    flag = true;
+                    q.push(temp->right);
+                    visited[temp->right] = true;
+                }
+                
+                //mapping of node to parent && visited of "mapping of node to parent"
+                if(mapping[temp] && !visited[mapping[temp]]){
+                    flag = true;
+                    q.push(mapping[temp]);
+                    visited[mapping[temp]] = true;
+                }
+                
+            }
+            
+            if(flag){
+                t++;
+                flag = false;
+            }
+            
+        }
+    }
+
+    int timeToBurnTree(BinaryTreeNode<int>* root, int target)
+    {
+        int t = 0;
+        BinaryTreeNode<int>* targetNode = NULL;
+        
+        //node, parentNode
+        map<BinaryTreeNode<int>*, BinaryTreeNode<int>*> mapping;
+        
+        nodeToParentMapping(root, target, mapping, targetNode);
+        
+        burnTree(targetNode, mapping, t);
+        
+        return t;
+    }
