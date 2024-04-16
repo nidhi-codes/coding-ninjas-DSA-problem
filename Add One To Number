@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 
+vector<int> addOneToNumber(vector<int> arr)
+{
+    // Write your code here
+
+    int n = arr.size();
+
+    if(arr[n-1] < 9){
+        arr[n-1] += 1;
+    }
+
+    else{
+        
+        int carry = 1;
+        for(int i =n-1; i>=0 && carry > 0 ; i--){
+            int sum = arr[i]+carry;
+            arr[i] = sum%10;
+            carry = sum/10;
+        }
+
+        if(carry > 0){
+            arr.insert(arr.begin(), carry);
+        }
+    }
+
+    vector<int> temp;
+
+    for(int i=0; i<n; i++){
+        if(arr[i] != 0){
+            temp.insert(temp.end(), arr.begin()+i, arr.end());
+            break;
+        }
+    
+    }
+    return temp;
+
+}
