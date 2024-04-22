@@ -1,0 +1,14 @@
+#include <bits/stdc++.h>
+
+string maximumDifference(int n, vector<int> &arr) {
+  // Write your code here.
+
+  int mini = *min_element(arr.begin(), arr.end());
+  int maxi = *max_element(arr.begin(), arr.end());
+  int diff = maxi - mini;
+
+  if (diff % 2 == 0)
+    return "EVEN";
+
+  return "ODD";
+}
