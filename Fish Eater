@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+int fishEater(vector<int> &fishes) {
+    // Write your code here.
+
+    int len = fishes.size();
+    int count = len;
+
+    int maxi = fishes[0];
+    
+    for(int i=1; i<len; i++){
+        
+        if(maxi>fishes[i]){
+            count--;
+        }
+
+        else{
+            maxi = fishes[i];
+        }
+    }
+
+    return count;
+}
