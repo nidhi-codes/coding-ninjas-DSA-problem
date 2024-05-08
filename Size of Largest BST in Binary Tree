@@ -31,7 +31,7 @@ info recursion(TreeNode* root, int& ans){
 
     info node;
 
-    node.max = max(root->data, right.size);
+    node.max = max(root->data, right.max);
     node.min = min(root->data, left.min);
 
     node.size = left.size + right.size +1;
