@@ -1,0 +1,60 @@
+/*
+    Following is Binary Tree Node structure:
+    class TreeNode
+    {
+    public:
+        int data;
+        TreeNode *left, *right;
+        TreeNode() : data(0), left(NULL), right(NULL) {}
+        TreeNode(int x) : data(x), left(NULL), right(NULL) {}
+        TreeNode(int x, TreeNode *left, TreeNode *right) : data(x), left(left), right(right) {}
+    };
+*/
+
+class info{
+
+    public:
+        int max;
+        int min;
+        bool isBST;
+        int size;
+};
+
+info recursion(TreeNode* root, int& ans){
+
+    if(root == NULL){
+        return {INT_MIN, INT_MAX, true, 0};
+    }
+
+    info left = recursion(root->left, ans);
+    info right = recursion(root->right, ans);
+
+    info node;
+
+    node.max = max(root->data, right.size);
+    node.min = min(root->data, left.min);
+
+    node.size = left.size + right.size +1;
+
+    if(left.isBST && right.isBST && (left.max < root->data && root->data < right.min)){
+       node. isBST = true;
+    }
+    else{
+        node.isBST = false;
+    }
+
+
+    if(node.isBST){
+        ans = max(ans, node.size);
+    }
+
+    return node;
+    
+}
+int largestBST(TreeNode * root){
+    // Write your code here.
+
+    int ans = 0;
+    info node = recursion(root, ans);
+    return ans;
+}
