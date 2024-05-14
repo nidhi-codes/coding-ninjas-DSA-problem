@@ -1,0 +1,48 @@
+#include <bits/stdc++.h> 
+    class element{
+        public:
+            int data;
+            int row;
+            int col;
+            
+            element(int data, int row, int col){
+                this->data = data;
+                this->row = row;
+                this->col = col;
+            }
+    };
+    
+    class compare{
+        public:
+            bool operator()(element* a, element* b){
+                return a->data > b->data;
+            }
+    };
+vector<int> mergeKSortedArrays(vector<vector<int>>&arr, int k)
+{
+    // Write your code here. 
+
+    priority_queue<element*, vector<element*>, compare> q;
+        vector<int> ans;
+        
+        for(int i=0; i<k; i++){
+            element* temp = new element(arr[i][0], i, 0);
+            q.push(temp);
+        }
+        
+        while(q.size() > 0){
+            element* temp = q.top();
+            q.pop();
+            ans.push_back(temp->data);
+            
+            int row = temp->row;
+            int col = temp->col;
+            if(col+1 < arr[row].size()){
+                element* t = new element(arr[row][col+1], row, col+1);
+                q.push(t);
+            }
+            
+        }
+        
+        return ans;
+}
