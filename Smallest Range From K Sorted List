@@ -1,0 +1,72 @@
+#include <queue>
+#include <limits.h>
+#include <vector>
+#include <algorithm>
+
+class node{
+    public: 
+        int data;
+        int row;
+        int col;
+
+        node(int d, int r, int c){
+            data = d;
+            row = r;
+            col = c;
+        }
+};
+
+class compare{
+    public:
+        bool operator()(node a, node b){
+            return a.data > b.data;
+        }
+};
+
+int kSorted(vector<vector<int>> &a, int k, int n) {
+    // Write your code here.
+
+    priority_queue<node, vector<node>, compare> q;
+
+    int mini = INT_MAX;
+    int maxi = INT_MIN;
+
+    for(int i=0; i<k; i++){
+
+        int temp = a[i][0];
+
+        q.push(node(temp, i, 0));
+        mini = min(mini, temp);
+        maxi = max(maxi, temp);
+    }
+
+    int ansS = mini;
+    int ansE = maxi;
+
+    while(!q.empty()){
+
+        node temp = q.top();
+        q.pop();
+
+        int mini = temp.data;
+        int row = temp.row;
+        int col = temp.col;
+
+
+        if(maxi-mini < ansE-ansS){
+            ansE = maxi;
+            ansS = mini;
+        }
+
+        if(col+1 < n){
+            maxi = max(maxi, a[row][col+1]);
+            q.push(node(a[row][col+1], row, col+1));
+        }
+
+        else {
+            break;
+        }
+    }
+
+    return ansE-ansS+1;
+}
