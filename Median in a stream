@@ -1,0 +1,79 @@
+#include<queue>
+
+int size(int a, int b){
+	if(a == b){
+		return 0;
+	}
+
+	else if(a>b){
+		return 1;
+	}
+
+	else{
+		return -1;
+	}
+}
+
+//finding median and push the element
+void median(int ele, priority_queue<int>& maxi, priority_queue<int, vector<int>, greater<int>>& mini, int& m){
+
+	switch(size(maxi.size(), mini.size())){
+
+		case 0:
+			if(ele > m){
+				mini.push(ele);
+				m = mini.top();
+			}
+			else{
+				maxi.push(ele);
+				m = maxi.top();
+			}
+			break;
+
+		case 1:
+			if(ele > m){
+				mini.push(ele);
+				m = (maxi.top()+mini.top())/2;
+			}
+			else{
+				mini.push(maxi.top());
+				maxi.pop();
+				maxi.push(ele);
+				m = (maxi.top()+mini.top())/2;
+			}
+			break;
+
+		case -1:
+			if(ele > m){
+				maxi.push(mini.top());
+				mini.pop();
+				mini.push(ele);
+				m = (maxi.top()+mini.top())/2;
+			}
+			else{
+				maxi.push(ele);
+				m = (maxi.top()+mini.top())/2;
+			}
+			break;
+	}
+
+}
+
+vector<int> findMedian(vector<int> &arr, int n){
+	
+	// Write your code here 
+
+	priority_queue<int> maxi;
+	priority_queue<int, vector<int>, greater<int>> mini;
+	vector<int> ans;
+	int m = 0;
+
+	for(int i=0; i<n; i++){
+
+		median(arr[i], maxi, mini, m);
+		ans.push_back(m);
+
+	}
+
+	return ans;
+}
